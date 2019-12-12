@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link rel="stylesheet" href="~/Content/application.css">
+    <link rel="stylesheet" href="~/Content/application_2.css">
+    <link rel="stylesheet" href="~/Content/style.css">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div id="wrapper">
+        <div id="top-menu">
+            <div id="account">
+                <ul>
+                    <li style="margin: 0px 10px 0px 5px;">|</li>
+                    <li>@Html.ActionLink("Выйти", "Index", "Home")</li>
+                </ul>
+            </div>
+            <div id="loggedas">
+                Вы вошли как:
+                Алексей Орлов
+                @Html.ActionLink("Управление доступом", "Index", "Home", new { style="margin-right: 0px !important;" })
+            </div>
+        </div>
+        <div id="header">
+            <h1>MyRedmine</h1>
+        </div>
+        <div id="main-menu" class="tabs">
+            <center>
+                <ul>
+                    <li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Новости", "Index", "News")</li>
+                    <li>@Html.ActionLink("Задачи", "Index", "Task")</li>
+                    <li>@Html.ActionLink("Трудозатраты", "Index", "Spend")</li>
+                </ul>
+            </center>
+        </div>
+
+        <div id="content">
+            @RenderBody()
+        </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    </div>
+</body>
+<div id="footer">
+    <div class="bgl">
+        <div class="bgr"> @DateTime.Now.Year - MyRedmine приложение ASP.NET </div>
+    </div>
+</div>
+</html>

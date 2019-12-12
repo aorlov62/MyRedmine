@@ -1,0 +1,55 @@
+﻿    <h2>Задачи</h2>
+
+    <br />
+
+    <table id="tableUsers">
+        <tr>
+            <th class="th">Id</th>
+            <th class="th">Name</th>
+            <th class="th">Description</th>
+            <th class="th">AutorId</th>
+            <th class="th">AssignedToId</th>
+            <th class="th">Status</th>
+            <th class="th">Priority</th>
+            <th class="th">SpendTime</th>
+        </tr>
+        @{
+            foreach (var task in ViewBag.Tasks)
+            {
+                <tr>
+                    <td class="td"><a href="/Task/Work/@task.Id">@task.Id</a></td>
+                    <td class="td"><a href="/Task/Work/@task.Id">@task.Name</a></td>
+                    <td class="td"><a href="/Task/Work/@task.Id">@task.Description</a></td>
+                    @foreach (var user in ViewBag.Users)
+                    {
+                        if (user.Id == task.AutorId)
+                        {
+                            <td class="td">@user.Name</td>
+                        }
+                    }
+                    @foreach (var user in ViewBag.Users)
+                    {
+                        if (user.Id == task.AssignedToId)
+                        {
+                            <td class="td">@user.Name</td>
+                        }
+                    }
+                    @foreach (var status in ViewBag.Statuses)
+                    {
+                        if (status.Id == task.Status)
+                        {
+                            <td class="td">@status.Name</td>
+                        }
+                    }
+                    @foreach (var priority in ViewBag.Prioritys)
+                    {
+                        if (priority.Id == task.Priority)
+                        {
+                            <td class="td">@priority.Name</td>
+                        }
+                    }
+                    <td class="td">@task.SpendTime</td>
+                </tr>
+            }
+        }
+    </table>

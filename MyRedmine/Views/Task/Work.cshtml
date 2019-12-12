@@ -1,0 +1,124 @@
+﻿@model MyRedmine.Models.Work
+
+    <div id="content">
+        <h2>#@ViewBag.Task.Id</h2>
+        <div class="issue tracker-14 status-2 priority-5 priority-high4 child details">
+            <div class="subject">
+                <h3>@ViewBag.Task.Name</h3>
+            </div>
+            <div class="attributes">
+                <div class="splitcontent">
+                    <div class="splitcontentleft">
+                        <div class="status attribute">
+                            <div class="label">Статус:</div>
+                            <div class="value">@ViewBag.StatusName</div>
+                        </div>
+                        <div class="priority attribute">
+                            <div class="label">Приоритет:</div>
+                            <div class="value">@ViewBag.PrioritetName</div>
+                        </div>
+                        <div class="assigned-to attribute">
+                            <div class="label">Назначена:</div>
+                            <div class="value">@ViewBag.UserName</div>
+                        </div>
+                        <!--<div class="start-date attribute">
+                            <div class="label">Дата начала:</div>
+                            <div class="value"></div>
+                        </div>
+                        <div class="due-date attribute">
+                            <div class="label">Срок завершения:</div>
+                            <div class="value"></div>
+                        </div> -->
+                        <div class="spent-time attribute">
+                            <div class="label">Трудозатраты:</div>
+                            <div class="value">@ViewBag.Task.SpendTime</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="description">
+                <p>
+                    <strong>Описание</strong>
+                    <div class="wiki">@ViewBag.Task.Description</div>
+                </p>
+            </div>
+        </div>
+        <div id="history">
+            <h3>История</h3>
+            Тут будет история
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+    <div class="contextual">
+        <input id="EditTaskButton" class="icon" type="button" value="Редактировать"></input>
+    </div>
+    <div style="clear:both;"></div>
+
+    <div id="UpdateTask" class="hidden">
+        <h3>Редактировать</h3>
+        @using (Html.BeginForm("Work", "Task", FormMethod.Post))
+        {
+            <div class="box filedroplistner">
+                <fieldset class="tabular">
+                    <legend>Изменить свойства</legend>
+                    <div id="all_attributes">
+                        <p>
+                            <label for="issue_subject">Тема</label>
+                            <input size="80" maxlength="255" type="text" value="@ViewBag.Task.Name" name="edit[name]" id="issue_subject">
+                        </p>
+                        <p>
+                            <label for="issue_description">Описание</label>
+                            <span id="issue_description_and_toolbar">
+                                <textarea class="wiki-edit" name="edit[description]" id="issue_description">@ViewBag.Task.Description</textarea>
+                            </span>
+                        </p>
+                        <div id="attributes" class="attributes">
+                            <div class="splitcontent">
+                                <p>
+                                    <label for="issue_status_id">Статус</label>
+                                    @Html.DropDownListFor(m => m.StatusAfter, (SelectList)ViewBag.Statuses)
+                                </p>
+                                <p>
+                                    <label for="issue_priority_id">Приоритет<span class="required"> *</span></label>
+                                    @Html.DropDownListFor(m => m.PriorityAfter, (SelectList)ViewBag.Prioritys))
+                                </p>
+                                <p>
+                                    <label for="issue_assigned_to_id">Назначена</label>
+                                    @Html.DropDownListFor(m => m.AssignedToIdAfter, (SelectList)ViewBag.Users)
+                                </p>
+                                <!--<p id="start_date_area">
+                                    <label for="issue_start_date">Дата начала</label>
+                            `       <input size="10" value="2019-01-21" type="date" name="edit[start_date]"id="issue_start_date" class="date">
+                                </p>
+                                <p id="due_date_area">
+                                    <label for="issue_due_date">Срок завершения</label>
+                                    <input size="10" type="date" name="edit[due_date]" id="issue_due_date" class="date">
+                                </p>-->
+                                <p>
+                                    <label for="time_entry_hours">Трудозатраты</label>
+                                    <input size="6" value="" type="text" name="edit[spend_time_new]" id="time_entry_hours"> час(а,ов)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Комментарий</legend>
+                    @Html.TextAreaFor(m => m.Comment, 5, 20, new { @class = "wiki-edit", @id = "issue_notes" })
+                </fieldset>
+            </div>
+
+            @Html.HiddenFor(m => m.TaskId)
+            @Html.HiddenFor(m => m.UserId)
+
+            @Html.HiddenFor(m => m.StatusBefore)
+            @Html.HiddenFor(m => m.AssignedToIdBefore)
+            @Html.HiddenFor(m => m.PriorityBefore)
+
+            <input type="submit" name="commit" value="Принять"></input>
+            <input id="CancelTaskButton" type="button" value="Отменить"></input>
+        }
+        <div id="preview" class="wiki"></div>
+    </div>
+	<script src="js/edit_task.js"></script>
